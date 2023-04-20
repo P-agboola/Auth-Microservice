@@ -11,9 +11,7 @@ export class AppController {
   async signUp(@Payload() authCredentialsDto: AuthCredentialsDto) {
     const user = await this.appService.signUp(authCredentialsDto);
     return {
-      ...user,
-      message: 'User created',
-      id: 1,
+      user,
     };
   }
 

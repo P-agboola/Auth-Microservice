@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { typeOrmConfig } from 'config/config';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { User } from './user.entity';
 
@@ -23,18 +20,8 @@ import { User } from './user.entity';
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User]),
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-    }),
-    JwtModule.register({
-      secret: process.env.Jwt_Secret,
-      signOptions: {
-        expiresIn: '1d',
-      },
-    }),
   ],
   controllers: [AppController],
-  providers: [AppService, JwtStrategy],
-  exports: [JwtStrategy, PassportModule],
+  providers: [AppService],
 })
 export class AppModule {}
